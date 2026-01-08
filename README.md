@@ -13,7 +13,12 @@ The goal is to achieve **maximum portability** across any processor architecture
 - **Hardware Agnostic**: Compiles on any platform with a standard C compiler.
 - **Embedded Optimization**: Efficient pointer arithmetic and memory management designed for resource-constrained devices.
 
+
+
 ## 📊 Implementation Status
+🚧 **Work in Progress**　　
+
+This project is currently under heavy development. Many features are still missing, and documentation is currently scarce. Sorry for the inconvenience!
 
 | Category | Operator / Module | Status | Note |
 | :--- | :--- | :---: | :--- |
