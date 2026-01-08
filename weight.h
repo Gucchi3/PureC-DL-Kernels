@@ -1,11 +1,9 @@
+#include "Tensor.h"
 #ifndef WEIGHT_H
 #define WEIGHT_H
 
 
-typedef struct{
-  int OC, INC, H, W;
-  const float *data;
-} W_Tensor;
+
 
 // 配列サイズの計算:
 // Output_Channel(3) * Kernel_H(4) * Kernel_W(4) * Input_Channel(3)

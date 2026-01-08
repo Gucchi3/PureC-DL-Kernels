@@ -3,7 +3,7 @@
 #include <math.h>
 #include "Tensor.h"
 #include "utils.h"
-#include "weight.h"
+
 
 //@note Patch_embedding
 Tensor* Patch_embedding(Tensor* input_tensor, W_Tensor* weight_tensor){

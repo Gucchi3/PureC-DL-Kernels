@@ -2,17 +2,9 @@
 #ifndef TENSOR_H
 #define TENSOR_H
 
-//@note Tensor型の定義
-typedef struct {
-  int H, W, C;
-  float *data;
-} Tensor;
+/*-------------------------------------------------------
+Tensor構造体：入力画像、特徴マップのための構造体
 
-#endif
-
-
-
-/*
 //* explanation
 H：高さ
 W：幅
@@ -24,5 +16,30 @@ C：チャンネル数
 また、同じくutils.cのfree_Tensor関数にて、指定したTensorのメモリ開放を行うことができる。
 
 ///!画像は必ず「HWC」順にしてください！ 
-*/
+-----------------------------------------------------------*/
+//@note Tensor型の定義
+typedef struct {
+  int H, W, C;
+  float *data;
+} Tensor;
 
+
+/*-----------------------------------------------------------
+W_Tensor構造体：重みのための構造体
+
+//*explanation
+H：高さ
+W：幅
+INC：入力CH
+OC：出力CH
+*data：データが入っている番地
+-------------------------------------------------------------*/
+typedef struct{
+  int OC, INC, H, W;
+  const float *data;
+} W_Tensor;
+
+
+
+
+#endif

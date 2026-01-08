@@ -1,5 +1,4 @@
 #include "Tensor.h"
-#include "weight.h"
 #ifndef UTILS_H
 #define UTILS_H
 
