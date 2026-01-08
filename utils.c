@@ -62,57 +62,89 @@ return;
 
 
 //@note print_Tensor 関数
-void print_Tensor(Tensor* Tensor, int show_tensor_contents){
-  if (Tensor){
-    printf("Tensor structure ->>\n");
-    printf("H=%d, W=%d, C=%d\n", Tensor->H, Tensor->W, Tensor->C);
-    printf("Tensor：%p\n",(void*)Tensor);
-    printf("Tensor->data：%p\n", (void*)Tensor->data);
-    if(show_tensor_contents){
-      int total = Tensor->H * Tensor->W * Tensor->C;
-      for(int i = 0; i < total; ++i){
-        printf("%6.2f", Tensor->data[i]);
-        // 区切り: チャンネル末尾でスペース、行末で改行
-        if ((i + 1) % Tensor->C == 0) printf(" ");
-        if ((i + 1) % (Tensor->W * Tensor->C) == 0) printf("\n");
-      }
-      printf("\n");
-    }
-  }else{
-    printf("Error：----- Tensor引数が空です。 -----");
+void print_Tensor(Tensor* t, int show_tensor_contents){
+  if (!t){
+    printf("Error: Tensor is NULL.\n");
+    return;
   }
-  // return
-  return;
+
+  printf("=== Tensor Structure ===\n");
+  printf("  Address : %p\n", (void*)t);
+  printf("  Data    : %p\n", (void*)t->data);
+  printf("  Shape   : H=%d, W=%d, C=%d\n", t->H, t->W, t->C);
+
+  if(show_tensor_contents){
+    printf("--- Data Content ---\n");
+    int total_pixels = t->H * t->W;
+    
+    // データが多すぎる場合の安全策（必要ならコメントアウト解除）
+    // if (total_pixels > 200) { printf(" (Too large to print all...)\n"); return; }
+
+    for(int h = 0; h < t->H; h++){
+      printf("Row %2d: ", h); // 行番号表示
+      
+      for(int w = 0; w < t->W; w++){
+        printf("[");
+        for(int c = 0; c < t->C; c++){
+          // index計算
+          int idx = ((h * t->W) + w) * t->C + c;
+          
+          // 値表示 (7.2f で桁を揃える)
+          printf("%7.2f", t->data[idx]);
+          
+          // 最後のチャンネル以外はカンマを入れる
+          if(c < t->C - 1) printf(",");
+        }
+        printf("] ");
+      }
+      printf("\n"); // W方向が終わったら改行
+    }
+    printf("========================\n\n");
+  }
 }
 
-
 //@note print_WTensor 関数
-void print_W_Tensor(W_Tensor* Tensor, int show_tensor_contents){
-  if (Tensor){
-    printf("W_Tensor structure ->>\n");
-    printf("OC=%d, INC=%d, H=%d, W=%d\n", Tensor->OC, Tensor->INC, Tensor->H, Tensor->W);
-    printf("W_Tensor：%p\n",(void*)Tensor);
-    printf("W_Tensor->data：%p\n", (void*)Tensor->data);
-    if(show_tensor_contents){
-      // 総要素数計算
-      int total = Tensor->OC * Tensor->INC * Tensor->H * Tensor->W;   
-      // データの並び順: [OC][H][W][INC] を想定
-      for(int i = 0; i < total; ++i){
-        printf("%6.2f", Tensor->data[i]);     
-        // 区切り1: 入力チャンネル(INC)末尾でスペース
-        if ((i + 1) % Tensor->INC == 0) printf(" ");
-        // 区切り2: カーネルの1行(W * INC)末尾で改行
-        if ((i + 1) % (Tensor->W * Tensor->INC) == 0) printf("\n");
-        // 区切り3: 1つのフィルタ(OC)が終わるごとに空行を追加して見やすくする
-        if ((i + 1) % (Tensor->H * Tensor->W * Tensor->INC) == 0 && (i + 1) < total) {
-            printf("----------------\n"); 
-        }
-      }
-      printf("\n");
-    }
-  }else{
-    printf("Error：----- W_Tensor引数が空です。 -----\n");
+void print_W_Tensor(W_Tensor* wt, int show_tensor_contents){
+  if (!wt){
+    printf("Error: W_Tensor is NULL.\n");
+    return;
   }
-  // return
-  return;
+
+  printf("=== W_Tensor Structure ===\n");
+  printf("  Address : %p\n", (void*)wt);
+  printf("  Data    : %p\n", (void*)wt->data);
+  printf("  Shape   : OC=%d, INC=%d, H=%d, W=%d\n", wt->OC, wt->INC, wt->H, wt->W);
+
+  if(show_tensor_contents){
+    printf("--- Data Content (Format: [INC0, INC1...]) ---\n");
+    
+    // データ順序: [OC][H][W][INC]
+    
+    for(int oc = 0; oc < wt->OC; oc++){
+      printf("Filter %2d (OC=%d):\n", oc, oc); // フィルタごとの見出し
+      
+      for(int h = 0; h < wt->H; h++){
+        printf("  Row %2d: ", h); // カーネルの行番号
+        
+        for(int w = 0; w < wt->W; w++){
+          printf("[");
+          for(int inc = 0; inc < wt->INC; inc++){
+            // 4次元インデックス計算
+            // index = oc*(H*W*INC) + h*(W*INC) + w*(INC) + inc
+            int idx = (oc * wt->H * wt->W * wt->INC) + 
+                      (h  * wt->W * wt->INC) + 
+                      (w  * wt->INC) + inc;
+
+            printf("%6.2f", wt->data[idx]);
+
+            // カンマ区切り（最後以外）
+            if(inc < wt->INC - 1) printf(",");
+          }
+          printf("] ");
+        }
+        printf("\n"); 
+      }
+      printf("--------------------------------\n"); // フィルタ区切り線
+    }
+  }
 }

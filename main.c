@@ -3,8 +3,9 @@
 #include <math.h>
 #include "utils.h"
 #include "input.h"
-#include "Patch_embed.h"
+//#include "Patch_embed.h"
 #include "weight.h"
+#include "Conv2d.h"
 
 //@note main 関数
 int main(void){
@@ -15,7 +16,7 @@ int main(void){
   print_Tensor(feat1,1);
   print_W_Tensor(&patch_weight, 1);
   //patch_embed
-  Tensor* feat2 = Patch_embedding(feat1, &patch_weight);
+  Tensor* feat2 = Conv2d(feat1, &patch_weight, 1, 1);
   // feat1の開放
   free_Tensor(feat1);
   //feat2をprintf
