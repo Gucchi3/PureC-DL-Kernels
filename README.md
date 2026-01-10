@@ -71,4 +71,4 @@ Release a "From PyTorch to C" tutorial once verification is complete.
 
 ## 📄 License
 
-??? License
+MiT License
