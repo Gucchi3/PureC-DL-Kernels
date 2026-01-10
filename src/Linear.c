@@ -1,15 +1,13 @@
-#include "Tensor.h"
+#include "../Tensor.h"
 #include "stdio.h"
 #include "stdlib.h"
 #include "math.h"
-#include "utils.h"
+#include "../include/utils.h"
 
 
 
 
-//############################################################
-//　　　　　　　　　　　　 ---- 未検証 ----
-//############################################################
+
 
 Tensor* Linear(Tensor* input_tensor, W_Tensor* weight_tensor, B_Tensor* bias_tensor){ 
 //　引数例外処理

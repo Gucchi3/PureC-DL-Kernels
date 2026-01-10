@@ -1,4 +1,4 @@
-#include "Tensor.h"
+#include "../Tensor.h"
 
 /*-----------------------------------------
 Linear：ごく一般的な線形層を提供します。
@@ -14,8 +14,6 @@ explanation：
 　//! pytorchでは基本CHWであることに注意してください。
 　//! pytorch -> weight.hに展開時には、permute(CHW_to_HWC)関数を提供する予定です。
 
-############################################################
-　　　　　　　　　　　　 ---- 未検証 ----
-############################################################
+
 -------------------------------------------*/
 Tensor* Linear(Tensor* input_tensor, W_Tensor* weight_tensor, B_Tensor* bias_tensor);
