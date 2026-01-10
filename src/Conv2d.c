@@ -72,7 +72,7 @@ Tensor* Conv2d(Tensor* input_tensor, W_Tensor* weight_tensor, B_Tensor* bias_ten
   }
 
   // return
-  return output_tensor ;
+  return output_tensor;
 }
 
 
