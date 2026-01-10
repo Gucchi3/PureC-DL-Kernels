@@ -43,7 +43,7 @@ The project currently focuses on implementing a standard CNN. Advanced architect
 | | DConv2d_BN_ACT | ⏳ Todo | Header defined in `Conv2d.h` |
 | **Pooling** | **Max Pooling** | ⏳ Todo | Standard downsampling |
 | | Average Pooling | ⏳ Todo | Less frequent usage |
-| **Linear** | **Linear** | 🚧 **Now** | Currently implementing |
+| **Linear** | **Linear** | ✅ Done | Done! |
 | **Normalization** | Batch Norm | 🚫 Suspended | **Cancelled**: Fused into Conv via ONNX . |
 | | Layer Norm | ⏳ Todo | Required for ViT / Mamba |
 | **Activation** | **ReLU** | ✅ Done | |
@@ -58,7 +58,7 @@ Tools to bridge the gap between PyTorch training and C inference.
 
 | Tool | Function | Status | Note |
 | :--- | :--- | :---: | :--- |
-| **Weight Exporter** | `.pth` (PyTorch) $\to$ `.h` (C Header) | ⏳ Todo | Auto-generates `W_Tensor` / `B_Tensor` arrays |
+| **Weight Exporter** | `.pth` (PyTorch) $\to$ `.h` (C Header) | 🚧 **Now** | Auto-generates `W_Tensor` / `B_Tensor` arrays |
 |**Permute**|HWC -> CHW|⏳ Todo|Auto permute HWC -> CHW|
 ||CHW -> HWC|⏳ Todo|Auto permute CHW -> HWC|
 
