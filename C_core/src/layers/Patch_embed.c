@@ -19,7 +19,6 @@ Tensor* Patch_embedding(Tensor* input_tensor, W_Tensor* weight_tensor){
   int kernel_size = weight_tensor->H;int output_channel = weight_tensor->OC;
   // 引数例外処理
   if (!input_tensor || kernel_size <= 0 || output_channel <= 0) {
-    printf("Error：----- 引数が足りないか、Tensorが空です。 -----\n");
     free_Tensor(input_tensor);
     return NULL;
   }
@@ -31,7 +30,6 @@ Tensor* Patch_embedding(Tensor* input_tensor, W_Tensor* weight_tensor){
   // 出力Tensor作成・メモリ確保 -> NULL確認
   Tensor* output_tensor = make_Tensor(output_tensor_H, output_tensor_W, output_tensor_C);
   if (!output_tensor){
-    printf("Error：----- 出力Tensorのメモリ確保に失敗しました。 -----\n");
     free_Tensor(input_tensor);
     return NULL;
   }

@@ -11,8 +11,6 @@ Tensor* Conv2d(Tensor* input_tensor, W_Tensor* weight_tensor, B_Tensor* bias_ten
   int kernel_size = weight_tensor->H; int output_channel = weight_tensor->OC;
   // 引数例外処理
   if (!input_tensor || kernel_size <= 0 || output_channel <= 0 || stride <= 0 || padding < 0 || (bias_tensor && bias_tensor->OC != output_channel)) {
-    printf("Error：----- 引数が足りないか、Tensorが空です。 -----\n");
-    //free_Tensor(input_tensor);
     return NULL;
   }
   // 出力Tensor形状計算
@@ -21,14 +19,11 @@ Tensor* Conv2d(Tensor* input_tensor, W_Tensor* weight_tensor, B_Tensor* bias_ten
   int output_tensor_C = output_channel;
   // 計算結果が有効かチェック
   if (output_tensor_H <= 0 || output_tensor_W <= 0) {
-    printf("Error：----- カーネルサイズが入力サイズを超えています。 -----\n");
     return NULL;
   }
   // 出力Tensor作成・メモリ確保 -> NULL確認
   Tensor* output_tensor = make_Tensor(output_tensor_H, output_tensor_W, output_tensor_C);
   if (!output_tensor){
-    printf("Error：----- 出力Tensorのメモリ確保に失敗しました。 -----\n");
-    //free_Tensor(input_tensor);
     return NULL;
   }
 
@@ -82,8 +77,6 @@ Tensor* Conv2d_BN_ACT(Tensor* input_tensor, W_Tensor* weight_tensor, B_Tensor* b
   int kernel_size = weight_tensor->H; int output_channel = weight_tensor->OC;
   // 引数例外処理
   if (!input_tensor || kernel_size <= 0 || output_channel <= 0 || stride <= 0 || padding < 0 || (bias_tensor && bias_tensor->OC != output_channel)) {
-    printf("Error：----- 引数が足りないか、Tensorが空です。 -----\n");
-    //free_Tensor(input_tensor);
     return NULL;
   }
   // 使用活性化関数選択
@@ -93,26 +86,17 @@ Tensor* Conv2d_BN_ACT(Tensor* input_tensor, W_Tensor* weight_tensor, B_Tensor* b
     else if (strcmp(act, "RELU6") == 0) act_type = 2;
     else if (strcmp(act, "SiLU") == 0)  act_type = 3;
 }
-// Activation警告
-if( act_type == 0){
-  printf("##############################################\n");
-  printf("警告：----- Activationが選択されていません。 -----\n");
-  printf("##############################################\n");
-}
   // 出力Tensor形状計算
   int output_tensor_H = ((input_tensor->H + 2 * padding - kernel_size) / stride) + 1;
   int output_tensor_W = ((input_tensor->W + 2 * padding - kernel_size) / stride) + 1;
   int output_tensor_C = output_channel;
   // 計算結果が有効かチェック
   if (output_tensor_H <= 0 || output_tensor_W <= 0) {
-    printf("Error：----- カーネルサイズが入力サイズを超えています。 -----\n");
     return NULL;
   }
   // 出力Tensor作成・メモリ確保 -> NULL確認
   Tensor* output_tensor = make_Tensor(output_tensor_H, output_tensor_W, output_tensor_C);
   if (!output_tensor){
-    printf("Error：----- 出力Tensorのメモリ確保に失敗しました。 -----\n");
-    //free_Tensor(input_tensor);
     return NULL;
   }
 

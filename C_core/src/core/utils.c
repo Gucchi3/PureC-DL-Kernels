@@ -20,7 +20,6 @@ Tensor* make_Tensor(int H,int W,int C){
   feat->data = (float*)calloc(H*W*C, sizeof(float));
   // callocのNULL確認、Trueの場合、先にfeatを解放してからreturn
   if (!feat->data){free(feat); return NULL;};
-  printf("メモリ確保成功...\n");
   // return
   return feat;
 }
@@ -38,12 +37,14 @@ Tensor* make_Tensor_from_array(int H, int W, int C, const float* init_data){
   image->data = (float*)malloc(H*W*C*sizeof(float));
   // NULLかどうか確認
   if (!image->data){free(image); return NULL;}
-  printf("メモリ確保成功...\n");
   // init_dataに格納されている画像データを、image->dataにコピー
   if (init_data){
     memcpy(image->data, init_data, H*W*C*sizeof(float));
   }else{
-    printf("Error：----- init_dataがNULLです。 -----");
+    // init_dataがNULLの場合はエラー
+    free(image->data);
+    free(image);
+    return NULL;
   }
   //return
   return image;
@@ -52,12 +53,11 @@ Tensor* make_Tensor_from_array(int H, int W, int C, const float* init_data){
 //@note Tensor_free 関数
 void free_Tensor(Tensor* Tensor){
   // メモリ開放
-if(!Tensor){printf("----- Tensorが空です。 -----"); return;}
-free(Tensor->data);
-free(Tensor);
-printf("メモリ開放完了...\n");
-// return
-return;
+  if(!Tensor){ return; }
+  free(Tensor->data);
+  free(Tensor);
+  // return
+  return;
 }
 
 
