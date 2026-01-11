@@ -12,14 +12,18 @@
 Tensor* make_Tensor(int32_t H, int32_t W, int32_t C){
   // 特徴マップの構造体を定義
   Tensor *feat = (Tensor*)malloc(sizeof(Tensor)); 
+  #if DEBUG
   // 確保したTensorがNULLでないか確認　
   if (!feat) return NULL;
+  #endif
   // Tensorに中身を付与
   feat->H = H; feat->W = W; feat->C = C; 
   // H*W*Cサイズのメモリ確保かつ、それをdataに格納、callocで0に初期化
   feat->data = (float*)calloc(H*W*C, sizeof(float));
+  #if DEBUG
   // callocのNULL確認、Trueの場合、先にfeatを解放してからreturn
   if (!feat->data){free(feat); return NULL;};
+  #endif
   // return
   return feat;
 }
@@ -29,12 +33,15 @@ Tensor* make_Tensor(int32_t H, int32_t W, int32_t C){
 Tensor* make_Tensor_from_array(int32_t H, int32_t W, int32_t C, const float* init_data){
   // 入力画像データの構造体を定義
   Tensor* image = (Tensor*)malloc(sizeof(Tensor));
+  #if DEBUG
   // 確保したTensorがNULLでないか確認
   if (!image) return NULL;
+  #endif
   // Tensorに中身(H, W, C)を付与
   image->H = H; image->W = W; image->C = C;
   // 画像分のメモリを確保
   image->data = (float*)malloc(H*W*C*sizeof(float));
+  #if DEBUG
   // NULLかどうか確認
   if (!image->data){free(image); return NULL;}
   // init_dataに格納されている画像データを、image->dataにコピー
@@ -46,6 +53,9 @@ Tensor* make_Tensor_from_array(int32_t H, int32_t W, int32_t C, const float* ini
     free(image);
     return NULL;
   }
+  #else
+  memcpy(image->data, init_data, H*W*C*sizeof(float));
+  #endif
   //return
   return image;
 }
@@ -53,7 +63,9 @@ Tensor* make_Tensor_from_array(int32_t H, int32_t W, int32_t C, const float* ini
 //@note Tensor_free 関数
 void free_Tensor(Tensor* Tensor){
   // メモリ開放
+  #if DEBUG
   if(!Tensor){ return; }
+  #endif
   free(Tensor->data);
   free(Tensor);
   // return

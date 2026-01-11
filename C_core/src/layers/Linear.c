@@ -11,10 +11,12 @@
 
 
 Tensor* Linear(Tensor* input_tensor, W_Tensor* weight_tensor, B_Tensor* bias_tensor){ 
+#if DEBUG
 //　引数例外処理
 if (!input_tensor || !weight_tensor){
   return NULL;
 }
+#endif
 
 // 出力Tensor形状計算
 int32_t output_tensor_H = 1;
@@ -24,15 +26,19 @@ int32_t output_tensor_C = weight_tensor->OC;
 // 出力Tensor形状例外処理
 const int32_t input_total_size = input_tensor->H * input_tensor->W * input_tensor->C;
 const int32_t expected_total_size = weight_tensor->H * weight_tensor->W * weight_tensor->INC;
+#if DEBUG
 if (output_tensor_C <= 0 || (input_total_size != expected_total_size)){
   return NULL;
 }
+#endif
 
 // 出力Tensor作成・メモリ作成 -> NULL確認
 Tensor* output_tensor = make_Tensor(output_tensor_H, output_tensor_W, output_tensor_C);
+#if DEBUG
 if (!output_tensor){
   return NULL;
 }
+#endif
 
 // Linear
   const float* weight_point = weight_tensor->data;

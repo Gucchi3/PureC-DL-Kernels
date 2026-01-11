@@ -18,11 +18,13 @@
 Tensor* Patch_embedding(Tensor* input_tensor, W_Tensor* weight_tensor){
   // 代入
   int32_t kernel_size = weight_tensor->H; int32_t output_channel = weight_tensor->OC;
+  #if DEBUG
   // 引数例外処理
   if (!input_tensor || kernel_size <= 0 || output_channel <= 0) {
     free_Tensor(input_tensor);
     return NULL;
   }
+  #endif
   // 出力Tensor形状計算
   int32_t output_tensor_H = input_tensor->H / kernel_size;
   int32_t output_tensor_W = input_tensor->W / kernel_size;
@@ -30,10 +32,12 @@ Tensor* Patch_embedding(Tensor* input_tensor, W_Tensor* weight_tensor){
   
   // 出力Tensor作成・メモリ確保 -> NULL確認
   Tensor* output_tensor = make_Tensor(output_tensor_H, output_tensor_W, output_tensor_C);
+  #if DEBUG
   if (!output_tensor){
     free_Tensor(input_tensor);
     return NULL;
   }
+  #endif
   // -------------------------------------------------------------------------------------------------------------
   //@audit paddingを考慮するなら、メモリ番地的にcal_pointを計算するんじゃなくて、H,Wで画像座標ベースのほうが良かったかもね。
   // -------------------------------------------------------------------------------------------------------------
