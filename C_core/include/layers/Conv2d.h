@@ -61,7 +61,20 @@ Tensor* DConv2d(Tensor* input_tensor, W_Tensor* weight_tensor, B_Tensor* bias_te
 
 
 /*---------------------------------------------------
-DConv2d_BN_ACT：comming soon...
+//! --- 未検証 ---
+DConv2d_BN_ACT： Depthwise_Conv+BNを提供します。
+must：input_tensor, weight_tensor, stride, padding
+
+
+explanation：
+　Depthwise Convを"HWC"順で提供します。
+　任意のstride, paddingに対応可能です。
+　Activationはact.hに作成されているものが使用可能です。(act.h参照)
+
+//! 注意 !//
+　//! 画像と重みの並びは、HWC, NHWCです。 CHWではありません！
+　//! 正規化処理は記述されていません。数学的に統合してください。
+　
 -----------------------------------------------------*/
 Tensor* DConv2d_BN_ACT(Tensor* input_tensor, W_Tensor* weight_tensor, B_Tensor* bias_tensor, int32_t stride, int32_t padding, const char* act);
 
