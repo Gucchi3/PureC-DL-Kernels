@@ -38,7 +38,7 @@ The project currently focuses on implementing a standard CNN. Advanced architect
 | | **PConv2d** (Pointwise) | 🚫 Suspended | Use `PConv2d_BN_ACT` instead. |
 | | PConv2d_BN_ACT | ⏳ Todo | Header defined in `Conv2d.h` |
 | | **DConv2d** (Depthwise) | 🚫 Suspended | Use `DConv2d_BN_ACT` instead. |
-| | DConv2d_BN_ACT | ⏳ Todo | Header defined in `Conv2d.h` |
+| | DConv2d_BN_ACT | ✅ Done | Header defined in `Conv2d.h` |
 | **Pooling** | **Max Pooling** | ⏳ Todo | Standard downsampling |
 | | Average Pooling | ⏳ Todo | Less frequent usage |
 | **Linear** | **Linear** | ✅ Done | Done! |
